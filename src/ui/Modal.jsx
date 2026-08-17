@@ -13,7 +13,7 @@ const StyledModal = styled.div`
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
-  transition: all 0.7s ease;
+  transition: all 0.5s;
 `;
 
 const Overlay = styled.div`
@@ -55,46 +55,46 @@ const Button = styled.button`
 
 const ModalContext = createContext();
 
-
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
+
   const close = () => setOpenName("");
   const open = setOpenName;
 
-  const value = { open, close, openName };
-
   return (
-    <ModalContext.Provider value={value}>
-      { children }
+    <ModalContext.Provider value={{ openName, close, open }}>
+      {children}
     </ModalContext.Provider>
-  )
+  );
 }
 
 function Open({ children, opens: opensWindowName }) {
   const { open } = useContext(ModalContext);
 
-  return cloneElement(children, {onClick: () => open(opensWindowName)});
+  return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick(close);
 
-  if ( name !== openName ) return null;
+  if (name !== openName) return null;
+
   return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
-        <Button onClick={close}><HiXMark /></Button>
+        <Button onClick={close}>
+          <HiXMark />
+        </Button>
 
-        <div>{ cloneElement(children, { onCloseModal: close }) }</div>
+        <div>{cloneElement(children, { onCloseModal: close })}</div>
       </StyledModal>
     </Overlay>,
     document.body
-  )
+  );
 }
-
 
 Modal.Open = Open;
 Modal.Window = Window;
 
-export default Modal
+export default Modal;
