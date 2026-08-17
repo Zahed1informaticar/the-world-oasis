@@ -3,12 +3,12 @@ import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import Spinner from '../../ui/Spinner';
 import { useSettings } from './useSettings';
-import { useUpdateSetting } from "./useUpdateSetting"
+import { useEditSetting } from "./useEditSetting"
 
 function UpdateSettingsForm() {
   const { isLoading, settings: { minBookingLength, maxBookingLength, maxGuestsPerBooking, breakfastPrice } = {} } = useSettings();
 
-  const { isUpdating, updateSetting } = useUpdateSetting();
+  const { isUpdating, updateSetting } = useEditSetting();
 
   function handleUpdate(e, field) {
     const { value } = e.target;
