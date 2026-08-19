@@ -26,16 +26,12 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditSession) editCabin({ newCabinData: {...data, image}, id: editId }, { onSuccess: (data) => {reset(); onCloseModal?.();} });
-    else createCabin({ ...data, image: image }, { onSuccess: (data) => {reset(); onCloseModal?.();} });
-  }
-
-  function onError(errors) {
-    // console.log(errors);
+    if (isEditSession) editCabin({ newCabinData: {...data, image}, id: editId }, { onSuccess: () => {reset(); onCloseModal?.();} });
+    else createCabin({ ...data, image: image }, { onSuccess: () => {reset(); onCloseModal?.();} });
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)} type={onCloseModal ? "modal": "regular"}>
+    <Form onSubmit={handleSubmit(onSubmit)} type={onCloseModal ? "modal": "regular"}>
       <FormRow label="Cabin Name" error={errors?.name?.message}>
         <Input type="text" disabled={isWorking} id="name" {...register("name", { required: "this field is required" })} />
       </FormRow>

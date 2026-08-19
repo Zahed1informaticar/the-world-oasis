@@ -4,11 +4,6 @@ import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
-const Menu = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
 
 const StyledToggle = styled.button`
   background: none;
@@ -84,6 +79,9 @@ function Toggle({ id }) {
 
 
   function handleClick(e) {
+    e.stopPropagation();
+    console.log("click");
+      
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
@@ -100,7 +98,7 @@ function Toggle({ id }) {
 
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close, false);
 
   if (openId !== id) return null;
 
