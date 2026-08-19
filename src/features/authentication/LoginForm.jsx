@@ -32,6 +32,7 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
+      <></>
       <FormRowVertical label="Password">
         <Input
           type="password"
